@@ -24,7 +24,18 @@ jobs:
 
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint_result=$(pylint $(git ls-files '*.py') --output-format=text)
+
+        # Extract the lint rating (assuming it's the last line of pylint output)
+        lint_rating=$(echo "$pylint_result" | tail -n 1 | grep -oP '(?<=rated at ).*(?=/10)')
+
+        # Compare the lint rating to the threshold (7 in this case)
+        if [ "$lint_rating" -ge 7 ]; then
+          echo "Lint rating is $lint_rating. Proceeding with the build."
+        else
+          echo "Lint rating is $lint_rating. Build halted as the rating is below 7."
+          exit 1  # Exit with an error to stop the workflow
+        fi
 
   build-windows:
     runs-on: windows-latest
@@ -47,4 +58,15 @@ jobs:
 
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint_result=$(pylint $(git ls-files '*.py') --output-format=text)
+
+        # Extract the lint rating (assuming it's the last line of pylint output)
+        lint_rating=$(echo "$pylint_result" | tail -n 1 | grep -oP '(?<=rated at ).*(?=/10)')
+
+        # Compare the lint rating to the threshold (7 in this case)
+        if [ "$lint_rating" -ge 7 ]; then
+          echo "Lint rating is $lint_rating. Proceeding with the build."
+        else
+          echo "Lint rating is $lint_rating. Build halted as the rating is below 7."
+          exit 1  # Exit with an error to stop the workflow
+        fi
