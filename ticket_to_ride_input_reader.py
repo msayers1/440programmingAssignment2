@@ -1,6 +1,34 @@
+import os
 #Global variable to switch between depth vs breadth searches
 depthVsBreadth = True
 # depthVsBreadth = False
+specificCards = False
+# specificCards = True
+folderOption = True
+# folderOption = False
+
+#Function to read a folder. 
+def readFolder(folder_path):
+    # Get a list of all files in the folder
+    files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
+    # print(files)
+    playersList = []
+    # Filter files to only card files
+    card_files = [f for f in files if f.startswith('card')]
+    for card in card_files:
+        key = card[card.find("-")+1:card.find(".")]
+        # print(key)
+        edgeFilename = folder_path + "edge-" + key + ".txt"
+        #check if the edge file exists. 
+        if os.path.exists(edgeFilename):
+            cardFilename = folder_path + card
+            playersList.append((key, cardFilename, edgeFilename))
+        else:
+            print("Error: missing edge for: ", key)
+    # print(playersList)
+    return playersList
+
+
 
 #Class to hol the destination cards.
 class destinationCard():
@@ -168,23 +196,28 @@ def scoreCardSet(cardFilename, edgeFilename):
         score += checkCard(adjacencyList, destinationCard)
     return score
 
+if specificCards:
+    cardFilename ='./cards/card-example.txt'
+    # destinations = readCardFile(filename)
 
-cardFilename ='card-example.txt'
-# destinations = readCardFile(filename)
+    edgeFilename ='./cards/edge-example.txt'
+    # routes = readEdgeFile(filename)
+    score = scoreCardSet(cardFilename, edgeFilename)
+    print("Your Example Score:", score)
+    cardFilename ='./cards/card-test2.txt'
+    # destinations = readCardFile(filename)
 
-edgeFilename ='edge-example.txt'
-# routes = readEdgeFile(filename)
-score = scoreCardSet(cardFilename, edgeFilename)
-print("Your Example Score:", score)
-cardFilename ='card-test2.txt'
-# destinations = readCardFile(filename)
-
-edgeFilename ='edge-test2.txt'
-# routes = readEdgeFile(filename)
-score = scoreCardSet(cardFilename, edgeFilename)
-print("Your Test2 Score:", score)
+    edgeFilename ='./cards/edge-test2.txt'
+    # routes = readEdgeFile(filename)
+    score = scoreCardSet(cardFilename, edgeFilename)
+    print("Your Test2 Score:", score)
 # adjacencyList = createGraphAdjacencyList(routes)
-
+if folderOption:
+    folderPath = './cards/'
+    playersList = readFolder(folderPath)
+    for cardset in playersList:
+        score = scoreCardSet(cardset[1], cardset[2])
+        print(cardset[0], "got a score of", score)
 # print(adjacencyList)
 # for source, destinations in adjacencyList:
 #     destinationString = ''
