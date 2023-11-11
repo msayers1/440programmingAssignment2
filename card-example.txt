@@ -1,0 +1,3 @@
+Sault St. Marie:Nashville:8
+Winnipeg:Little Rock:11
+Los Angeles:New York City:20

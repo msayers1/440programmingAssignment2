@@ -1,0 +1,19 @@
+Vancouver:Seattle:1
+Seattle:Helena:6
+Denver:Helena:4
+Denver:Oklahoma City:4
+Oklahoma City:Dallas:2
+Dallas:Houston:1
+Houston:New Orleans:2
+New Orleans:Miami:6
+Miami:Atlanta:5
+Raleigh:Atlanta:2
+Washington:Raleigh:2
+New York:Washington:2
+Boston:New York:2
+Montreal:Boston:2
+Sault St. Marie:Montreal:5
+Duluth:Sault St. Marie:3
+Chicago:Duluth:3
+San Francisco:Portland:5
+Portland:Seattle:1

@@ -1,0 +1,14 @@
+Little Rock:Oklahoma City:2
+Little Rock:Saint Louis:2
+Nashville:Saint Louis:2
+Oklahoma City:Kansas City:2
+Omaha:Kansas City:1
+Omaha:Duluth:2
+Winnipeg:Duluth:4
+Winnipeg:Helena:4
+Sault St. Marie:Winnipeg:6
+Sault St. Marie:Duluth:3
+Sault St. Marie:Toronto:2
+Sault St. Marie:Montreal:5
+Toronto:Montreal:3
+Toronto:Duluth:6

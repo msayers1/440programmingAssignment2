@@ -1,0 +1,4 @@
+San Francisco:Washington:20
+Miami:Vancouver:30
+Chicago:El Paso:10
+Phoenix:New York:15
