@@ -30,7 +30,7 @@ jobs:
         lint_rating=$(echo "$pylint_result" | tail -n 1 | grep -oP '(?<=rated at ).*(?=/10)')
 
         # Compare the lint rating to the threshold (7 in this case)
-        if [ "$lint_rating" -ge 7 ]; then
+        if ( "$lint_rating" -ge 7 ); then
           echo "Lint rating is $lint_rating. Proceeding with the build."
         else
           echo "Lint rating is $lint_rating. Build halted as the rating is below 7."
@@ -64,7 +64,7 @@ jobs:
         lint_rating=$(echo "$pylint_result" | tail -n 1 | grep -oP '(?<=rated at ).*(?=/10)')
 
         # Compare the lint rating to the threshold (7 in this case)
-        if [ "$lint_rating" -ge 7 ]; then
+        if ( "$lint_rating" -ge 7 ); then
           echo "Lint rating is $lint_rating. Proceeding with the build."
         else
           echo "Lint rating is $lint_rating. Build halted as the rating is below 7."
