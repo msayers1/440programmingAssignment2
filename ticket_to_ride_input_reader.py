@@ -206,19 +206,17 @@ def breadth_first_search(route_list, checked, source, end):
         # Basically checking the breadth at once.
         if end in route_list[source]:
             return True
-        else:
-            # Now you dive into each city in the list.
-            for city in route_list:
-                # Make sure it is not checked already.
-                if city not in checked:
-                    # print("To the next level", checked, city)
-                    # Call the recursive function with city as the source now.
-                    if breadth_first_search(route_list, checked, city, end):
-                        return True
-                # else:
-                #     return False
-    else:
-        return False
+        # Now you dive into each city in the list.
+        for city in route_list:
+            # Make sure it is not checked already.
+            if city not in checked:
+                # print("To the next level", checked, city)
+                # Call the recursive function with city as the source now.
+                if breadth_first_search(route_list, checked, city, end):
+                    return True
+            # else:
+            #     return False
+    return False
 
 # Depth first search to dive in and see if they are connected.
 
@@ -240,12 +238,9 @@ def depth_first_search(route_list, checked, source, end):
             if city == end:
                 # print("It returned true once")
                 return True
-            else:
-                # Before you move on, then you dive in and search down that city.
-                if city not in checked and depth_first_search(route_list, checked, city, end):
-                    return True
-    else:
-        return False
+            # Before you move on, then you dive in and search down that city.
+            if city not in checked and depth_first_search(route_list, checked, city, end):
+                return True
     return False
 
 # Function to score a card set.
