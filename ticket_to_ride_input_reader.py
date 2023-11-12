@@ -80,6 +80,7 @@ def trains_to_points(trains):
         return 10
     if trains_num == 6:
         return 15
+    return None
 
 # function to create the route dictionary.
 
@@ -183,8 +184,7 @@ def check_card(route_list, card):
     # then places a negative sign on it.
     if result:
         return int(card.destination_points)
-    else:
-        return -1 * int(card.destination_points)
+    return -1 * int(card.destination_points)
 
 # Breadth first search to dive in and see if they are connected.
 
