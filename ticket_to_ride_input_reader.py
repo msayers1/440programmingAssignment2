@@ -12,6 +12,14 @@ FOLDER_OPTIONS = True
 # FOLDER_OPTIONS = False
 playersList = []
 
+DESTINATION1 = 'destination1'
+DESTINATION2 = 'destination2'
+TRAINS = 'trains'
+DESTINATION_POINTS = 'destination_points'
+CITY_A = 'city_a'
+CITY_B = 'city_b'
+ROUTE_POINTS = 'route_points'
+
 # Function to read a folder.
 
 
@@ -39,7 +47,7 @@ def read_folder(folder_path):
             card_filename = folder_path + card
             playersList.append((key, card_filename, edge_filename))
         else:
-            print("Error: missing edge for: ", key)
+            print("Error: missing edge card for: ", key)
             # print(playersList)
     return playersList
 
@@ -56,9 +64,9 @@ def create_destination_card(destination_array):
     edge filenames with path (str) )
     """
     destination_card = {}
-    destination_card.update({"destination1", destination_array[0]})
-    destination_card.update({"destination2",destination_array[1]})
-    destination_card.update({"destination_points",destination_array[2]})
+    destination_card.update({DESTINATION1: destination_array[0]})
+    destination_card.update({DESTINATION2: destination_array[1]})
+    destination_card.update({DESTINATION_POINTS: destination_array[2]})
     return destination_card
 # Function to take the number of trains and return the points those trains are worth.
 
@@ -68,19 +76,21 @@ def trains_to_points(trains):
     Add this docstring
     """
     trains_num = int(trains)
-    if trains_num == 1:
-        return 1
-    if trains_num == 2:
-        return 2
-    if trains_num == 3:
-        return 4
-    if trains_num == 4:
-        return 7
-    if trains_num == 5:
-        return 10
-    if trains_num == 6:
-        return 15
-    return None
+    train_conversion = [0,1,2,4,7,10,15]
+    return train_conversion[trains_num]
+    # if trains_num == 1:
+    #     return 1
+    # if trains_num == 2:
+    #     return 2
+    # if trains_num == 3:
+    #     return 4
+    # if trains_num == 4:
+    #     return 7
+    # if trains_num == 5:
+    #     return 10
+    # if trains_num == 6:
+    #     return 15
+    # return None
 
 # function to create the route dictionary.
 
@@ -90,13 +100,13 @@ def create_route_dictionary(destination_array):
     Add this docstring
     """
     route_dictionary = {}
-    route_dictionary.update({'destination1', destination_array[0]})
+    route_dictionary.update({CITY_A: destination_array[0]})
     # end or Destination 2
-    route_dictionary.update({"destination2", destination_array[1]})
+    route_dictionary.update({CITY_B: destination_array[1]})
     # The number of trains is in the text file so you need to convert to points.
-    route_dictionary.update({'trains', destination_array[2]})
+    route_dictionary.update({TRAINS: destination_array[2]})
     points = trains_to_points(destination_array[2])
-    route_dictionary.update({"route_points", points})
+    route_dictionary.update({ROUTE_POINTS: points})
     return route_dictionary
 # Function to read card file
 
@@ -141,8 +151,8 @@ def create_graph_adjacency_list(routes):
     """
     route_list = {}
     for route in routes:
-        city_a = route['destination1']
-        city_b = route['destination2']
+        city_a = route[CITY_A]
+        city_b = route[CITY_B]
         add_route_to_graph_adjacency_list(route_list, city_a, city_b)
         add_route_to_graph_adjacency_list(route_list, city_b, city_a)
     return route_list
@@ -176,15 +186,15 @@ def check_card(route_list, card):
     # Allows swapping between Breadth vs depth
     if DEPTH_VS_BREADTH:
         result = depth_first_search(
-            route_list, checked, card["destination1"], card["destination2"])
+            route_list, checked, card[DESTINATION1], card[DESTINATION2])
     else:
         result = breadth_first_search(
-            route_list, checked, card["destination1"], card["destination2"])
+            route_list, checked, card[DESTINATION1], card[DESTINATION2])
     # checks the result and leaves the destination points as is, or if not met,
     # then places a negative sign on it.
     if result:
-        return int(card.destination_points)
-    return -1 * int(card.destination_points)
+        return int(card[DESTINATION_POINTS])
+    return -1 * int(card[DESTINATION_POINTS])
 
 # Breadth first search to dive in and see if they are connected.
 
@@ -252,13 +262,19 @@ def score_card_set(card_filename, edge_filename):
     """
     destinations = read_card_file(card_filename)
     routes = read_edge_file(edge_filename)
+    player_name = card_filename[card_filename.find("-")+1:card_filename.find(".", 1)]
     adjacency_list = create_graph_adjacency_list(routes)
     local_score = 0
+    number_of_trains = 0
     # Score the routes
     for route in routes:
-        local_score += int(route.route_points)
-        number_of_trains += int(route.trains)
+        local_score += int(route[ROUTE_POINTS])
+        number_of_trains += int(route[TRAINS])
     # Score the destination cards.
+    if number_of_trains > 45:
+        error_string = "There seems to be too many routes for " + player_name + ", he"
+        error_string += " seems to have used " + str(number_of_trains)
+        print(error_string)
     for destination_card in destinations:
         local_score += check_card(adjacency_list, destination_card)
     return local_score
@@ -292,13 +308,13 @@ def score_card_set(card_filename, edge_filename):
 
 # print(destinations)
 # for route in routes:
-# print(route["destination1"], ' to ', route["destination2"], ', worth:', route.route_points,
+# print(route[DESTINATION1], ' to ', route[DESTINATION2], ', worth:', route.route_points,
 #                                                                               ' points.' )
 
 # for card in destinations:
 #         if check_card(adjacencyList, card):
-#             print(card["destination1"], " is connected to ", card["destination2"],
-#                                               " worth:", card["destination_points"])
+#             print(card[DESTINATION1], ' is connected to ', card[DESTINATION2],
+#                                               ' worth:', card[DESTINATION_POINTS])
 #         else:
-#             print(card["destination1"], " is not connected to ", card["destination2"],
-#                                               " deduct:", card["destination_points"])
+#             print(card[DESTINATION1], ' is not connected to ', card[DESTINATION2],
+#                                               ' deduct:', card[DESTINATION_POINTS])
