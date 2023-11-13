@@ -11,7 +11,7 @@ SPECIFIC_CARDS = False
 FOLDER_OPTIONS = True
 # FOLDER_OPTIONS = False
 playersList = []
-
+#Global Constants
 DESTINATION1 = 'destination1'
 DESTINATION2 = 'destination2'
 TRAINS = 'trains'
@@ -42,6 +42,7 @@ def read_folder(folder_path):
         key = card[card.find("-")+1:card.find(".")]
         # print(key)
         edge_filename = folder_path + "edge-" + key + ".txt"
+        print(edge_filename)
         # check if the edge file exists.
         if os.path.exists(edge_filename):
             card_filename = folder_path + card
@@ -57,11 +58,11 @@ def read_folder(folder_path):
 def create_destination_card(destination_array):
     """
     Args:
-    destination_array (): Path to the cards.
+    destination_array: Path to the cards.
 
     Returns:
-    list: List of tuples of ( player name(str), card filenames with path (str),
-    edge filenames with path (str) )
+    dictionary of destination1, destination2, destination points of 
+        a destination card. 
     """
     destination_card = {}
     destination_card.update({DESTINATION1: destination_array[0]})
@@ -73,7 +74,11 @@ def create_destination_card(destination_array):
 
 def trains_to_points(trains):
     """
-    Add this docstring
+    Args:
+    trains: Number of trains.
+
+    Returns:
+    int (points) based on number of trains
     """
     trains_num = int(trains)
     train_conversion = [0,1,2,4,7,10,15]
@@ -97,7 +102,12 @@ def trains_to_points(trains):
 
 def create_route_dictionary(destination_array):
     """
-    Add this docstring
+    Args:
+    destination_array: the array of routes in the edge text file.
+
+    Returns:
+    route dictionary: a card of city a, city b, number of trains, 
+    and the points based off that number of trains. 
     """
     route_dictionary = {}
     route_dictionary.update({CITY_A: destination_array[0]})
@@ -113,7 +123,12 @@ def create_route_dictionary(destination_array):
 
 def read_card_file(filename):
     """
-    Add this docstring
+    Args:
+    filename: the filename of the card file. 
+
+    Returns:
+    a list of destination cards: the card text file has the destination cards, 
+    the list has the list of cards in the file. 
     """
     destination_cards = []
     with open(filename, 'r', encoding="utf-8") as f:
@@ -130,7 +145,11 @@ def read_card_file(filename):
 
 def read_edge_file(filename):
     """
-    Add this docstring
+    Args:
+    filename: the filename of the edge file. 
+
+    Returns:
+    list of routes: list of routes from an edge file. (Possibly also used for a game_board.txt also)
     """
     routes = []
     with open(filename, 'r', encoding="utf-8") as f:
@@ -143,41 +162,52 @@ def read_edge_file(filename):
     return routes
 
 # Function to create the Graph Adjancency List. Really a dictionary of lists.
-
-
 def create_graph_adjacency_list(routes):
     """
-    Add this docstring
+    Args:
+    routes: list of routes from a file.
+
+    Returns:
+    route adjaceny list: dictionary of all the cities with a list for each of all
+    the connected cities to that one. 
     """
-    route_list = {}
+    route_adjaceny_list = {}
     for route in routes:
         city_a = route[CITY_A]
         city_b = route[CITY_B]
-        add_route_to_graph_adjacency_list(route_list, city_a, city_b)
-        add_route_to_graph_adjacency_list(route_list, city_b, city_a)
-    return route_list
+        add_route_to_graph_adjacency_list(route_adjaceny_list, city_a, city_b)
+        add_route_to_graph_adjacency_list(route_adjaceny_list, city_b, city_a)
+    return route_adjaceny_list
 
 # Function to separate out the logic to add the route to the list, I decided to call the
 # route twice instead of spelling out the two different ways to log it in one function.
-
-
-def add_route_to_graph_adjacency_list(route_list, source, end):
+def add_route_to_graph_adjacency_list(route_adjaceny_list, source, end):
     """
-    Add this docstring
+    Args:
+    route_adjaceny_list: Adjacency list of the routes that the previous function is building.
+    source: city a or the first city
+    end: city b or the second city
+
+    Returns:
+    Nothing it modifies the route_adjacency_list which is passed into it. 
     """
-    if source in route_list.keys():
-        if end not in route_list[source]:
-            route_list[source].append(end)
+    if source in route_adjaceny_list.keys():
+        if end not in route_adjaceny_list[source]:
+            route_adjaceny_list[source].append(end)
     else:
-        route_list[source] = []
-        route_list[source].append(end)
+        route_adjaceny_list[source] = []
+        route_adjaceny_list[source].append(end)
 
 # Function to switch between depth first and breadth first searchs.
-
-
-def check_card(route_list, card):
+def check_card(route_adjaceny_list, card):
     """
-    Add this docstring
+    Args:
+    route_adjaceny_list: is the adjacency list to be checked.  
+    card: the destination card to be checked. 
+
+    Returns:
+    Destination points: either + or - of the destination points of the card provided
+    depened upon whether there was a route between the cities. 
     """
     # Holds the cities checked.
     checked = []
@@ -186,10 +216,10 @@ def check_card(route_list, card):
     # Allows swapping between Breadth vs depth
     if DEPTH_VS_BREADTH:
         result = depth_first_search(
-            route_list, checked, card[DESTINATION1], card[DESTINATION2])
+            route_adjaceny_list, checked, card[DESTINATION1], card[DESTINATION2])
     else:
         result = breadth_first_search(
-            route_list, checked, card[DESTINATION1], card[DESTINATION2])
+            route_adjaceny_list, checked, card[DESTINATION1], card[DESTINATION2])
     # checks the result and leaves the destination points as is, or if not met,
     # then places a negative sign on it.
     if result:
@@ -199,9 +229,18 @@ def check_card(route_list, card):
 # Breadth first search to dive in and see if they are connected.
 
 
-def breadth_first_search(route_list, checked, source, end):
+def breadth_first_search(route_adjaceny_list, checked, source, end):
     """
-    Add this docstring
+    Args:
+    route_adjaceny_list: Adjacency list to check whether there is a route between two cities
+    checked: list of cites checked (could really be a optional argument but would need to be shifted
+            to the end)
+    source: city a or first city
+    end: city b or second city or destination
+
+    Returns:
+    True or False whether or not there is a route between the two cities or True when the two 
+    cities are the same.
     """
     # Marks the source as checked.
     checked.append(source)
@@ -209,20 +248,20 @@ def breadth_first_search(route_list, checked, source, end):
     # If you find the city then return true.
     if source == end:
         return True
-    # Make sure the source is in the route_list.
-    if source in route_list.keys():
-        # print("Source List", route_list[source])
+    # Make sure the source is in the route_adjaceny_list.
+    if source in route_adjaceny_list.keys():
+        # print("Source List", route_adjaceny_list[source])
         # chekc to see if the source is connected to the end.
         # Basically checking the breadth at once.
-        if end in route_list[source]:
+        if end in route_adjaceny_list[source]:
             return True
         # Now you dive into each city in the list.
-        for city in route_list:
+        for city in route_adjaceny_list:
             # Make sure it is not checked already.
             if city not in checked:
                 # print("To the next level", checked, city)
                 # Call the recursive function with city as the source now.
-                if breadth_first_search(route_list, checked, city, end):
+                if breadth_first_search(route_adjaceny_list, checked, city, end):
                     return True
             # else:
             #     return False
@@ -231,9 +270,18 @@ def breadth_first_search(route_list, checked, source, end):
 # Depth first search to dive in and see if they are connected.
 
 
-def depth_first_search(route_list, checked, source, end):
+def depth_first_search(route_adjaceny_list, checked, source, end):
     """
-    Add this docstring
+    Args:
+    route_adjaceny_list: Adjacency list to check whether there is a route between two cities
+    checked: list of cites checked (could really be a optional argument but would need to be shifted
+            to the end)
+    source: city a or first city
+    end: city b or second city or destination
+
+    Returns:
+    True or False whether or not there is a route between the two cities or True when the two 
+    cities are the same.
     """
     # Marks the source as checked.
     checked.append(source)
@@ -241,15 +289,15 @@ def depth_first_search(route_list, checked, source, end):
     if source == end:
         return True
     # Make sure the source is in the route list.
-    if source in route_list.keys():
+    if source in route_adjaceny_list.keys():
         # check each city
-        for city in route_list[source]:
+        for city in route_adjaceny_list[source]:
             # Check if you found it.
             if city == end:
                 # print("It returned true once")
                 return True
             # Before you move on, then you dive in and search down that city.
-            if city not in checked and depth_first_search(route_list, checked, city, end):
+            if city not in checked and depth_first_search(route_adjaceny_list, checked, city, end):
                 return True
     return False
 
@@ -258,7 +306,12 @@ def depth_first_search(route_list, checked, source, end):
 
 def score_card_set(card_filename, edge_filename):
     """
-    Add this docstring
+    Args:
+    card_filename: the filename of the card file. 
+    edge_filename: the filename of the edge file. 
+
+    Returns:
+    local_score: score of the game. 
     """
     destinations = read_card_file(card_filename)
     routes = read_edge_file(edge_filename)

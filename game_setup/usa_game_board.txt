@@ -1,0 +1,76 @@
+Vancouver:Calgary:3:Grey:
+Vancouver:Seattle:1:Grey:Grey
+Seattle:Calgary:4:Grey:
+Seattle:Helena:6:Yellow:
+Seattle:Portland:1:Grey:Grey
+Portland:Salt Lake City:6:Blue:
+Portland:San Francisco:5:Pink:Green
+San Francisco:Salt Lake City:5:Orange:White
+San Francisco:Los Angeles:3:Pink:Yellow
+Los Angeles:Las Vegas:2:Grey:
+Los Angeles:Phoenix:3:Grey:
+Los Angeles:El Paso:6:Black:
+Calgary:Winnipeg:6:White:
+Calgary:Helena:4:Grey:
+Helena:Winnipeg:4:Blue:
+Helena:Duluth:6:Orange:
+Helena:Omaha:5:Red:
+Helena:Denver:4:Green:
+Helena:Salt Lake City:3:Pink:
+Salt Lake City:Denver:3:Red:Yellow
+Salt Lake City:Las Vegas:3:Orange:
+Phoenix:Denver:5:White:
+Phoenix:Santa Fe:3:Grey:
+Phoenix:El Paso:3:Grey:
+Winnipeg:Sault St. Marie:6:Grey:
+Winnipeg:Duluth:4:Black:
+Duluth:Sault St. Marie:3:Grey:
+Duluth:Toronto:6:Pink:
+Duluth:Chicago:3:Red:
+Duluth:Omaha:2:Grey:Grey
+Omaha:Chicago:4:Blue:
+Omaha:Kansas City:1:Grey:Grey
+Omaha:Denver:4:Pink:
+Kansas City:Saint Louis:2:Blue:Pink
+Kansas City:Oklahoma City:2:Grey:Grey
+Denver:Kansas City:4:Black:Orange
+Denver:Oklahoma City:4:Red:
+Denver:Santa Fe:2:Grey:
+Santa Fe:Oklahoma City:3:Blue:
+Santa Fe:El Paso:2:Grey:
+Oklahoma City:Little Rock:2:Grey:
+Oklahoma City:Dallas:2:Grey:Grey
+Oklahoma City:El Paso:5:Yellow:
+El Paso:Dallas:4:Red:
+El Paso:Houston:6:Green:
+Sault St. Marie:Montreal:5:Black:
+Sault St. Marie:Toronto:2:Grey:
+Chicago:Toronto:4:White:
+Chicago:Pittsburgh:3:Orange:Black
+Chicago:Saint Louis:2:Green:White
+Saint Louis:Pittsburgh:5:Green:
+Saint Louis:Nashville:2:Grey:
+Saint Louis:Little Rock:2:Grey:
+Little Rock:Nashville:3:White:
+Little Rock:New Orleans:3:Green:
+Dallas:Houston:1:Grey:Grey
+Houston:New Orleans:2:Grey:
+New Orleans:Atlanta:4:Yellow:Orange
+New Orleans:Miami:6:Red:
+Montreal:Boston:2:Grey:Grey
+Montreal:New York:3:Blue:
+Montreal:Toronto:3:Grey:
+Boston:New York:2:Yellow:Red
+New York:Washington:2:Black:Orange
+New York:Pittsburgh:2:Green:White
+Pittsburgh:Washington:2:Grey:
+Pittsburgh:Raleigh:2:Grey:
+Pittsburgh:Nashville:4:Yellow:
+Washington:Raleigh:2:Grey:Grey
+Raleigh:Charleston:2:Grey:
+Raleigh:Atlanta:2:Grey:Grey
+Raleigh:Nashville:3:Black:
+Nashville:Atlanta:1:Grey:
+Atlanta:Charleston:2:Grey:
+Atlanta:Miami:5:Blue:
+Charleston:Miami:4:Pink:
