@@ -3,6 +3,7 @@ Ticket to Ride Scoring Script
 """
 # Global OS - providing accces to the OS.
 import os
+from filemanager import read_file
 # Global variable to switch between depth vs breadth searches
 DEPTH_VS_BREADTH = True
 # DEPTH_VS_BREADTH = False
@@ -143,23 +144,18 @@ def read_card_file(filename):
 # Function to read the Edge file
 
 
-def read_edge_file(filename):
-    """
-    Args:
-    filename: the filename of the edge file. 
+# def read_edge_file(filename):
+#     """
+#     Args:
+#     filename: the filename of the edge file.
 
-    Returns:
-    list of routes: list of routes from an edge file. (Possibly also used for a game_board.txt also)
-    """
-    routes = []
-    with open(filename, 'r', encoding="utf-8") as f:
-        all_lines = f.readlines()
-        route = None
-        for line in all_lines:
-            route_array = line.split(':')
-            route = create_route_dictionary(route_array)
-            routes.append(route)
-    return routes
+#     Returns:
+#     list of routes: list of routes from an edge file.
+#     (Possibly also used for a game_board.txt also)
+#     """
+#     routes = []
+#
+#     return routes
 
 # Function to create the Graph Adjancency List. Really a dictionary of lists.
 def create_graph_adjacency_list(routes):
@@ -314,7 +310,8 @@ def score_card_set(card_filename, edge_filename):
     local_score: score of the game. 
     """
     destinations = read_card_file(card_filename)
-    routes = read_edge_file(edge_filename)
+    # routes = read_edge_file(edge_filename)
+    routes = read_file(edge_filename,':',create_route_dictionary)
     player_name = card_filename[card_filename.find("-")+1:card_filename.find(".", 1)]
     adjacency_list = create_graph_adjacency_list(routes)
     local_score = 0

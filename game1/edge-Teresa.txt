@@ -1,0 +1,13 @@
+New Orleans:Miami:6
+Atlanta:Miami:5
+Montreal:Toronto:3
+Omaha:Kansas City:1
+Little Rock:New Orleans:3
+Los Angeles:Phoenix:3
+Oklahoma City:Little Rock:2
+Santa Fe:Oklahoma City:3
+Los Angeles:Las Vegas:2
+Raleigh:Charleston:2
+Phoenix:Denver:5
+Los Angeles:El Paso:6
+Raleigh:Nashville:3

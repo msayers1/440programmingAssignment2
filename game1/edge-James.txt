@@ -1,0 +1,13 @@
+Phoenix:Santa Fe:3
+Houston:New Orleans:2
+Duluth:Omaha:2
+Omaha:Chicago:4
+Vancouver:Seattle:1
+Dallas:Houston:1
+Portland:San Francisco:5
+Santa Fe:El Paso:2
+Sault St. Marie:Toronto:2
+Pittsburgh:Washington:2
+Saint Louis:Little Rock:2
+Denver:Oklahoma City:4
+Helena:Denver:4

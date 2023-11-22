@@ -11,6 +11,7 @@ import csv
 import os
 from enum import Enum
 from ticket_to_ride_input_reader import CITY_A, CITY_B,TRAINS, ROUTE_POINTS, trains_to_points
+from filemanager import add_to_file, create_file, count_lines, read_file
 #Global Constants
 ROUTE_SLOT_A = 'route_slot_a'
 ROUTE_SLOT_B = 'route_slot_b'
@@ -26,11 +27,13 @@ def create_empty_file(game, player):
     Nothing 
     """
     filename = f"./{game}/card-{player}.txt"
-    with open(filename, 'w', encoding="utf-8"):
-        pass
+    create_file(filename)
+    # with open(filename, 'w', encoding="utf-8"):
+    #     pass
     filename = f"./{game}/edge-{player}.txt"
-    with open(filename, 'w', encoding="utf-8"):
-        pass
+    create_file(filename)
+    # with open(filename, 'w', encoding="utf-8"):
+    #     pass
 
 
 def add_route_to_file(game, player, route):
@@ -44,20 +47,12 @@ def add_route_to_file(game, player, route):
     """
     filename = f"./{game}/edge-{player}.txt"
     route_string = f"{route[CITY_A]}:{route[CITY_B]}:{route[TRAINS]}"
-    with open(filename, 'a', encoding="utf-8") as file:
-        file.write(route_string + '\n')
+    add_to_file(filename, route_string)
+    # with open(filename, 'a', encoding="utf-8") as file:
+    #     file.write(route_string + '\n')
 
 
-def count_lines(file_name):
-    """
-    Args:
-    filename: name of file which you want to count lines.
 
-    Returns:
-    Number of lines. 
-    """
-    with open(file_name, 'r', encoding="utf-8") as file:
-        return sum(1 for line in file)
 
 def fetch_first_name():
     """
@@ -130,25 +125,25 @@ def create_game_route_dictionary(destination_array):
     return route_dictionary
 # Function to read card file
 
-# Read the game_board file.
-def read_game_board_file(filename):
-    """
-    Args:
-    filename: the filename of the game board file. 
-
-    Returns:
-    list of routes: list of routes from a game_board.txt
-    """
-    routes = []
-    with open(filename, 'r', encoding="utf-8") as f:
-        all_lines = f.readlines()
-        route = None
-        for line in all_lines:
-            line_without_newline = line[:-1]
-            route_array = line_without_newline.split(':')
-            route = create_game_route_dictionary(route_array)
-            routes.append(route)
-    return routes
+# # Read the game_board file.
+# def read_game_board_file(filename):
+#     """
+#     Args:
+#     filename: the filename of the game board file.
+#
+#     Returns:
+#     list of routes: list of routes from a game_board.txt
+#     """
+#     routes = []
+#     with open(filename, 'r', encoding="utf-8") as f:
+#         all_lines = f.readlines()
+#         route = None
+#         for line in all_lines:
+#             line_without_newline = line[:-1]
+#             route_array = line_without_newline.split(':')
+#             route = create_game_route_dictionary(route_array)
+#             routes.append(route)
+#     return routes
 
 # Function to create the Graph Adjancency List. Really a dictionary of lists.
 def create_game_graph_adjacency_list(routes):
@@ -260,7 +255,8 @@ class TicketToRideGame:
         folder_path = f"./{game_name}/"
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
-        self.remaining_route_list = read_game_board_file(filename)
+        # self.remaining_route_list = read_game_board_file(filename)
+        self.remaining_route_list = read_file(filename, ':', create_game_route_dictionary)
         # print(self.remaining_route_list)
         self.game_adjaceny_list = create_game_graph_adjacency_list(self.remaining_route_list)
         self.player_list = []

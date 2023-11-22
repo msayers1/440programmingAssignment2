@@ -1,0 +1,12 @@
+Chicago:Saint Louis:2
+Omaha:Denver:4
+Sault St. Marie:Montreal:5
+San Francisco:Los Angeles:3
+Salt Lake City:Denver:3
+Helena:Omaha:5
+Charleston:Miami:4
+Saint Louis:Nashville:2
+Washington:Raleigh:2
+Winnipeg:Duluth:4
+El Paso:Dallas:4
+Calgary:Helena:4
